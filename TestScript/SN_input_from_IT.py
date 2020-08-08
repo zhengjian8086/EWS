@@ -40,7 +40,7 @@ class SNCreater:
 
     def run(self):
         while True:
-            time.sleep(1)
+            time.sleep(5)
             data = self.create_data()
             resp = self.send_data(data)
 
