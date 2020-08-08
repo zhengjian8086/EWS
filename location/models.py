@@ -2,7 +2,7 @@ from django.db import models
 
 
 # Create your models here.
-class EWSMainTable(models):
+class EWSMainTable(models.Model):
     SN = models.CharField("服务码", max_length=10)
     modelName = models.CharField("服务码", max_length=30)
     MAC = models.CharField("MAC", max_length=20)
