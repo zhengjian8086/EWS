@@ -1,11 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views import View
+from django.utils.decorators import method_decorator
 from .models import EWSMainTable
+from tools.location_decorators import check_SN_repeat
 
 
 # Create your views here.
 class Info(View):
+    @method_decorator(check_SN_repeat)
     def deal_post_from_IT(self, request):
         req_dict = {
             "SN": request.POST.get("SN"),
