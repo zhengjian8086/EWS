@@ -84,5 +84,17 @@ class Info(View):
             return JsonResponse({}, status=404)
         return JsonResponse(resp)
 
+    def Search_simple_result(self, request):
+        pass
+
     def get(self, request):
-        return JsonResponse({"code": 200})
+        # 0:Search simple result
+        choice_method = {
+            "0": self.Search_simple_result,
+        }
+        flag = request.GET.get("Flag")
+        if flag:
+            resp = choice_method[flag](request)
+        else:
+            return JsonResponse({}, status=404)
+        return JsonResponse(resp)
