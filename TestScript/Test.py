@@ -1,1 +1,1 @@
-print(chr(65))
+print("1-2-3".split("-"))

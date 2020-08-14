@@ -84,13 +84,53 @@ class Info(View):
             return JsonResponse({}, status=404)
         return JsonResponse(resp)
 
-    def Search_simple_result(self, request):
-        pass
+    def search_sort(self, req_dict):
+        if req_dict["type"] == "SN":
+            result = EWSMainTable.objects.filter(SN=req_dict["data"])
+        elif req_dict["type"] == "MAC":
+            result = EWSMainTable.objects.filter(MAC=req_dict["data"])
+        elif req_dict["type"] == "location":
+            result = EWSMainTable.objects.filter(
+                area=req_dict["data"].split("-")[0],
+                line=req_dict["data"].split("-")[1],
+                row=req_dict["data"].split("-")[2],
+                number=req_dict["data"].split("-")[3],
+            )
+        return result
+
+    def search_simple_result(self, request):
+        req_dict = {
+            "type": request.GET.get("type"),
+            "data": request.GET.get("data")
+        }
+        try:
+            query_result = self.search_sort(req_dict)
+            if query_result:
+                resp = {
+                    "code": 200,
+                    "SN": query_result[0].SN,
+                    "Model": query_result[0].modelName,
+                    "MAC": query_result[0].MAC,
+                    "area": query_result[0].area,
+                    "line": query_result[0].line,
+                    "row": query_result[0].row,
+                    "number": query_result[0].number,
+                    "created_time": query_result[0].created_time.strftime("%Y-%m-%d %H:%M:%S"),
+                }
+            else:
+                resp = {
+                    "code": 1004,
+                    "note": "Query is not exists"
+                }
+        except Exception as e:
+            print("***MyError:", e)
+            resp = {"code": 1005}
+        return resp
 
     def get(self, request):
         # 0:Search simple result
         choice_method = {
-            "0": self.Search_simple_result,
+            "0": self.search_simple_result,
         }
         flag = request.GET.get("Flag")
         if flag:
