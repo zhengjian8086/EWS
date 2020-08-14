@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'location',
+    'warning',
 ]
 
 MIDDLEWARE = [
@@ -102,9 +103,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-Hans'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
@@ -116,3 +117,22 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Celery config
+BROKER_URL = 'redis://127.0.0.1:6379/1'
+result_backend = 'redis://127.0.0.1:6379/0'
+
+# 可接受的内容格式
+accept_content = ["json"]
+# 任务序列化数据格式
+task_serializer = "json"
+# 结果序列化数据格式
+result_serializer = "json"
+# 可选参数：给某个任务限流
+# task_annotations = {'tasks.my_task': {'rate_limit': '10/s'}}
+# 可选参数：给任务设置超时时间。超时立即中止worker
+# task_time_limit = 10 * 60
+# 可选参数：给任务设置软超时时间，超时抛出Exception
+# task_soft_time_limit = 10 * 60
+# 可选参数：如果使用django_celery_beat进行定时任务
+# beat_scheduler = "django_celery_beat.schedulers:DatabaseScheduler"
