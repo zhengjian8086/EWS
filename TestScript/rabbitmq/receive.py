@@ -1,7 +1,7 @@
 import pika
 
 hostname = '127.0.0.1'
-parameters = pika.ConnectionParameters(hostname)
+parameters = pika.ConnectionParameters(hostname, port=5672)
 connection = pika.BlockingConnection(parameters)
 
 # 创建通道
@@ -14,7 +14,7 @@ def callback(ch, method, properties, body):
 
 
 # 告诉rabbitmq使用callback来接收信息
-channel.basic_consume('hello',callback , True)
+channel.basic_consume('hello', callback, True)
 
 # 开始接收信息，并进入阻塞状态，队列里有信息才会调用callback进行处理,按ctrl+c退出
 print(' [*] Waiting for messages. To exit press CTRL+C')

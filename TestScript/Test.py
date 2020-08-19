@@ -1,12 +1,9 @@
 from celery import Celery
+app = Celery()
 
-# 初始化celery, 指定broker
-# app = Celery('guoxiaonao', broker='redis://:password@127.0.0.1:6379/0')
-# 若redis无密码，password可省略
-app = Celery('guoxiaonao', broker='redis://:@127.0.0.1:6379/1')
+class Config:
+    enable_utc = True
+    timezone = 'Europe/London'
 
-
-# 创建任务函数
-@app.task
-def task_test():
-    print("task is running....")
+app.config_from_object(Config)
+print(app.conf.timezone)
