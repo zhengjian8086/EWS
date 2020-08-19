@@ -1,0 +1,4 @@
+CREATE DATABASE mytest CHARSET UTF8;
+CREATE TABLE timetest(
+
+)

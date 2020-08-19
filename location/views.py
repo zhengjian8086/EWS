@@ -4,6 +4,7 @@ from django.views import View
 from django.utils.decorators import method_decorator
 from .models import EWSMainTable
 from tools.location_decorators import check_SN_repeat
+from tools.location_method import create_EWS_location_info_json
 
 
 # Create your views here.
@@ -105,23 +106,7 @@ class Info(View):
         }
         try:
             query_result = self.search_sort(req_dict)
-            if query_result:
-                resp = {
-                    "code": 200,
-                    "SN": query_result[0].SN,
-                    "Model": query_result[0].modelName,
-                    "MAC": query_result[0].MAC,
-                    "area": query_result[0].area,
-                    "line": query_result[0].line,
-                    "row": query_result[0].row,
-                    "number": query_result[0].number,
-                    "created_time": query_result[0].created_time.strftime("%Y-%m-%d %H:%M:%S"),
-                }
-            else:
-                resp = {
-                    "code": 1004,
-                    "note": "Query is not exists"
-                }
+            resp = create_EWS_location_info_json(query_result[0])
         except Exception as e:
             print("***MyError:", e)
             resp = {"code": 1005}
