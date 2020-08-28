@@ -48,3 +48,4 @@ class SNCreater:
 if __name__ == '__main__':
     sc = SNCreater()
     sc.run()
+

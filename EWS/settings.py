@@ -77,9 +77,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'EWS',
-        'USER': 'guest_q',
-        'PASSWORD': '123',
-        'host': '3306',
+        'USER': 'root',
+        'PASSWORD': '123456',
+        'HOST': 'ews_db',
+        'PORT': '3306',
     }
 }
 
@@ -125,8 +126,8 @@ CRONJOBS = [
 ]
 
 # Celery config
-CELERY_BROKER_URL = 'redis://127.0.0.1:6379/1'
-CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'
+CELERY_BROKER_URL = 'redis://192.168.0.112:6379/1'
+CELERY_RESULT_BACKEND = 'redis://192.168.0.112:6379/0'
 # region celery demo
 # BROKER_URL = 'redis://127.0.0.1:6379/1'
 # result_backend = 'redis://127.0.0.1:6379/0'
